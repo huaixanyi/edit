@@ -3,6 +3,7 @@ package com.huaxianyi.edit.contorller;
 import com.google.common.io.Files;
 import com.huaxianyi.edit.bean.FileContent;
 import com.huaxianyi.edit.bean.FileSelect;
+import com.huaxianyi.edit.util.EditContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/edit")
 public class EditController {
-    private static final String BLOG_PARENT_PATH = "D:\\workspace\\edit\\net-blog\\source\\_posts";
 
     @GetMapping("/index")
     public ModelAndView editView() {
@@ -45,7 +43,7 @@ public class EditController {
     @PostMapping("/fileDicSelect")
     public List<FileSelect> fileDicSelect() throws Exception {
         List<FileSelect> fileSelectList = new ArrayList<>();
-        File file = new File(BLOG_PARENT_PATH);
+        File file = new File(EditContext.BLOG_PARENT_PATH);
         if (!file.exists()) {
             throw new FileNotFoundException();
         }
@@ -64,7 +62,7 @@ public class EditController {
 
     public List<FileSelect> blogFileList() throws Exception {
         List<FileSelect> fileSelectList = new ArrayList<>();
-        File file = new File(BLOG_PARENT_PATH);
+        File file = new File(EditContext.BLOG_PARENT_PATH);
         if (!file.exists()) {
             throw new FileNotFoundException();
         }
@@ -113,7 +111,7 @@ public class EditController {
     @PostMapping("/newFile")
     public FileContent newFile(String path, String name, Boolean isDic) throws Exception {
         if (isDic) {
-            File file2 = new File(BLOG_PARENT_PATH + "\\" + name);
+            File file2 = new File(EditContext.BLOG_PARENT_PATH + "\\" + name);
             if (file2.exists()) {
                 throw new FileAlreadyExistsException(file2.getAbsolutePath());
             }

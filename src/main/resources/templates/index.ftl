@@ -50,17 +50,20 @@
             background: url(/js/bg.jpg);
             padding: 10px;
         }
+        h1{
+            color: #90a4ae;
+        }
     </style>
 </head>
 
 <body>
 <div class="container" style="width: 100%;">
-    <h1>Twitter bootstrap tutorial</h1>
+    <h1>Edit Panle</h1>
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu"
                     aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">Edit Panle</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -70,35 +73,34 @@
         <div id="navbar-menu" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Page One</a></li>
-                <li><a href="#">Page Two</a></li>
             </ul>
         </div>
     </nav>
     <div id="content" class="row-fluid">
         <div class="col-md-5">
             <div style="width: 100%;">
-                <input type="text" class="form-control" id="name1" placeholder="请输入文件夹名称" style="width: 90%;float: left;">
-                <button id="edit-newdic-submit" onclick="newFile(this,true)" type="button" class="btn btn-primary" style="float: right;width: 10%;">提交
+                <input type="text" class="form-control" id="name1" placeholder="请输入文件夹名称" style="width: 80%;float: left;">
+                <button id="edit-newdic-submit" onclick="newFile(this,true)" type="button" class="btn btn-primary" style="width: 10%;float: right;">提交
                 </button>
             </div>
             <div style="width: 100%;">
                 <select id="dicSelect" class="selectpicker" data-live-search="true">
                     <option value=''>请选择</option>
                 </select>
-                <input type="text" class="form-control" id="name2" placeholder="请输入文件名称" style="width: 45%;float: left;">
-                <button id="edit-newfile-submit" onclick="newFile(this,false)" type="button" class="btn btn-primary" style="float: right;width: 10%;">提交
+                <input type="text" class="form-control" id="name2" placeholder="请输入文件名称" style="width: 40%;float: left;">
+                <button id="edit-newfile-submit" onclick="newFile(this,false)" type="button" class="btn btn-primary" style="width: 10%;float: right;">提交
                 </button>
             </div>
             <div style="width: 100%;">
                 <select id="pathSelect" class="selectpicker" data-live-search="true">
                     <option value=''>请选择</option>
                 </select>
-                <button id="edit-submit" type="button" class="btn btn-primary" style="float: right;width: 10%;">提交
+                <button id="edit-submit" type="button" class="btn btn-primary" style="width: 10%;float: right;">提交
                 </button>
             </div>
-            <textarea class="form-control" id="code" name="code"></textarea>
-        </div>
+            <div style="width: 100%;">
+                <textarea class="form-control" id="code" name="code"></textarea>
+            </div>
         <div class="col-md-7">
 
         </div>
@@ -116,16 +118,16 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="/plugin/bootstrap-select-1.13.9/dist/js/bootstrap-select.min.js"></script>
 <script>
-    $(".selectpicker").selectpicker({width: '90%'});
-    $("#dicSelect").selectpicker({width: '45%'});
+    $(".selectpicker").selectpicker({width: '80%'});
+    $("#dicSelect").selectpicker({width: '40%'});
     fileDicSelect();
     fileSelect();
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         lineWrapping: true,
-        theme: "colorforth"                  //选中的theme
+        theme: "colorforth",                  //选中的theme
+        height: "700px"
     });
-    editor.setSize('700px', '500px');
     $("#edit-submit").click(function () {
         if ($("#pathSelect").val() === '') {
             alert("路径为空")
