@@ -116,7 +116,7 @@ public class EditController {
     @PostMapping("/newFile")
     public FileContent newFile(String path, String name, Boolean isDic) throws Exception {
         if (isDic) {
-            File file2 = new File(EditContext.BLOG_PARENT_PATH + "\\" + name);
+            File file2 = new File(EditContext.BLOG_PARENT_PATH + "/" + name);
             if (file2.exists()) {
                 throw new FileAlreadyExistsException(file2.getAbsolutePath());
             }
@@ -128,7 +128,7 @@ public class EditController {
             if (!file.exists()) {
                 throw new FileNotFoundException();
             }
-            File file2 = new File(path + "\\" + name + ".md");
+            File file2 = new File(path + "/" + name + ".md");
             if (file2.exists()) {
                 throw new FileAlreadyExistsException(file2.getAbsolutePath());
             }

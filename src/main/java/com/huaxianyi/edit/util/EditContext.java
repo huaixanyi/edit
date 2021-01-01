@@ -34,7 +34,7 @@ public class EditContext {
             "";
 
     static {
-        BLOG_PARENT_PATH = isOSLinux() ? "\\net-blog\\source\\_posts" : "E:\\JAVA_PROS\\net-blog\\source\\_posts";
+        BLOG_PARENT_PATH = isOSLinux() ? "/net-blog/source/_posts" : "E:/JAVA_PROS/net-blog/source/_posts";
     }
 
     public static boolean isOSLinux() {
