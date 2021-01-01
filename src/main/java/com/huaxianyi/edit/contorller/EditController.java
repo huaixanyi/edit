@@ -33,6 +33,11 @@ public class EditController {
         return new ModelAndView("index");
     }
 
+    @GetMapping("/view")
+    public ModelAndView view() {
+        return new ModelAndView("view");
+    }
+
     @ResponseBody
     @PostMapping("/fileSelect")
     public List<FileSelect> fileSelect() throws Exception {
@@ -120,7 +125,7 @@ public class EditController {
             }
         } else {
             File file = new File(path);
-            if (!file.exists() || file.isDirectory()) {
+            if (!file.exists()) {
                 throw new FileNotFoundException();
             }
             File file2 = new File(path + "\\" + name + ".md");
@@ -130,6 +135,7 @@ public class EditController {
             if (!file2.createNewFile()) {
                 throw new FileUploadException(file2.getAbsolutePath());
             }
+            Files.write(EditContext.staticInitFile.getBytes(), file2);
         }
         return new FileContent(this.fileDicSelect(),this.fileSelect());
     }

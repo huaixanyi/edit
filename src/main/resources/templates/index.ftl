@@ -12,6 +12,7 @@
             border: 1px solid #2f1e2e;
             background: url(/js/edit.png) !important;
             font-size: 20px;
+            height: 600px;
         }
 
         .container {
@@ -50,7 +51,8 @@
             background: url(/js/bg.jpg);
             padding: 10px;
         }
-        h1{
+
+        h1 {
             color: #90a4ae;
         }
     </style>
@@ -79,16 +81,20 @@
     <div id="content" class="row-fluid">
         <div class="col-md-5">
             <div style="width: 100%;">
-                <input type="text" class="form-control" id="name1" placeholder="请输入文件夹名称" style="width: 80%;float: left;">
-                <button id="edit-newdic-submit" onclick="newFile(this,true)" type="button" class="btn btn-primary" style="width: 10%;float: right;">提交
+                <input type="text" class="form-control" id="name1" placeholder="请输入文件夹名称"
+                       style="width: 80%;float: left;">
+                <button id="edit-newdic-submit" onclick="newFile(this,true)" type="button" class="btn btn-primary"
+                        style="width: 10%;float: right;">提交
                 </button>
             </div>
             <div style="width: 100%;">
                 <select id="dicSelect" class="selectpicker" data-live-search="true">
                     <option value=''>请选择</option>
                 </select>
-                <input type="text" class="form-control" id="name2" placeholder="请输入文件名称" style="width: 40%;float: left;">
-                <button id="edit-newfile-submit" onclick="newFile(this,false)" type="button" class="btn btn-primary" style="width: 10%;float: right;">提交
+                <input type="text" class="form-control" id="name2" placeholder="请输入文件名称"
+                       style="width: 40%;float: left;">
+                <button id="edit-newfile-submit" onclick="newFile(this,false)" type="button" class="btn btn-primary"
+                        style="width: 10%;float: right;">提交
                 </button>
             </div>
             <div style="width: 100%;">
@@ -101,12 +107,12 @@
             <div style="width: 100%;">
                 <textarea class="form-control" id="code" name="code"></textarea>
             </div>
-        <div class="col-md-7">
+            <div class="col-md-7">
 
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </body>
 
 <script src="/plugin/codemirror-5.59.0/lib/codemirror.js"></script>
@@ -126,7 +132,6 @@
         lineNumbers: true,
         lineWrapping: true,
         theme: "colorforth",                  //选中的theme
-        height: "700px"
     });
     $("#edit-submit").click(function () {
         if ($("#pathSelect").val() === '') {
@@ -138,11 +143,10 @@
             type: "post",
             url: "/edit/data",
             data: {value: value, path: $("#pathSelect").val()},
-            dataType: "json",
+            dataType: "text",
             success: function (data) {
-                if (data === true) {
-                    editor.setValue(data);
-                }
+                alert("ok")
+                editor.setValue(data);
             }
         });
     });
@@ -159,48 +163,66 @@
             });
         }
     });
-    function newFile(ele,isDic){
-        if (isDic){
+
+    function newFile(ele, isDic) {
+        if (isDic) {
             let val = $("#name1").val();
-            if (!val){
+            if (!val) {
                 alert("请输入文件名")
-                return ;
+                return;
             }
             $.ajax({
                 type: "post",
                 url: "/edit/newFile",
-                data: {isDic:isDic,name:val},
-                dataType: "json",
-                success: function () {
-                    fileDicSelect();
-                    fileSelect();
-                }
-            });
-        }else {
-            let val = $("#name2").val();
-            if (!val){
-                alert("请输入文件名")
-                return ;
-            }
-            if (!$("#dicSelect").val()){
-                alert("请选择文件路径")
-                return ;
-            }
-            $.ajax({
-                type: "post",
-                url: "/edit/newFile",
-                data: {isDic:isDic,name:val,path:$("#dicSelect").val()},
+                data: {isDic: isDic, name: val},
                 dataType: "json",
                 success: function (data) {
-                    if (data) {
-                        $.each(data, function (i, o) {
+                    alert("ok")
+                    $("#pathSelect").html("<option value=''>请选择</option>")
+                    $("#dicSelect").html("<option value=''>请选择</option>")
+                    if (data.fileList) {
+                        $.each(data.fileList, function (i, o) {
                             $("#pathSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
                         });
                     }
                     $("#pathSelect").selectpicker('refresh');
 
-                    if (data) {
-                        $.each(data, function (i, o) {
+                    if (data.pathList) {
+                        $.each(data.pathList, function (i, o) {
+                            $("#dicSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
+                        });
+                    }
+                    $("#dicSelect").selectpicker('refresh');
+                }
+            });
+        } else {
+            let val = $("#name2").val();
+            if (!val) {
+                alert("请输入文件名")
+                return;
+            }
+            if (!$("#dicSelect").val()) {
+                alert("请选择文件路径")
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/edit/newFile",
+                data: {isDic: isDic, name: val, path: $("#dicSelect").val()},
+                dataType: "json",
+                success: function (data) {
+                    alert("ok")
+                    $("#pathSelect").html("<option value=''>请选择</option>")
+                    $("#dicSelect").html("<option value=''>请选择</option>")
+                    if (data.fileList) {
+                        $.each(data.fileList, function (i, o) {
+                            $("#pathSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
+                        });
+                    }
+                    $("#pathSelect").selectpicker('refresh');
+
+                    if (data.pathList) {
+                        $.each(data.pathList, function (i, o) {
                             $("#dicSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
                         });
                     }
@@ -211,7 +233,7 @@
 
     }
 
-    function fileSelect(){
+    function fileSelect() {
         $.ajax({
             type: "post",
             url: "/edit/fileSelect",
@@ -228,7 +250,7 @@
         });
     }
 
-    function fileDicSelect(){
+    function fileDicSelect() {
         $.ajax({
             type: "post",
             url: "/edit/fileDicSelect",
