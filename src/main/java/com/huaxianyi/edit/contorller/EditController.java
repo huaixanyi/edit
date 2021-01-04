@@ -50,7 +50,7 @@ public class EditController {
         List<FileSelect> fileSelectList = new ArrayList<>();
         File file = new File(EditContext.BLOG_PARENT_PATH);
         if (!file.exists()) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException(EditContext.BLOG_PARENT_PATH);
         }
         File[] list = file.listFiles();
         assert list != null;
@@ -69,7 +69,7 @@ public class EditController {
         List<FileSelect> fileSelectList = new ArrayList<>();
         File file = new File(EditContext.BLOG_PARENT_PATH);
         if (!file.exists()) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException(EditContext.BLOG_PARENT_PATH);
         }
         listLF(file, fileSelectList);
         return fileSelectList;
