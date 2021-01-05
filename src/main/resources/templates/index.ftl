@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/plugin/codemirror-5.59.0/lib/codemirror.css"/>
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://img.huaxianyi.com/cdn-js-css/css/bootstrap.min.css">
     <link rel="stylesheet" href="/plugin/codemirror-5.59.0/theme/colorforth.css"/>
     <link href="/plugin/bootstrap-select-1.13.9/dist/css/bootstrap-select.min.css" rel="stylesheet"/>
     <style>
@@ -118,10 +118,10 @@
 <script src="/plugin/codemirror-5.59.0/lib/codemirror.js"></script>
 <#--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
 <!--使用Bootstrap的js插件，必须先调入jQuery-->
-<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+<script src="https://img.huaxianyi.com/cdn-js-css/js/jquery.min.js"></script>
 
 <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://img.huaxianyi.com/cdn-js-css/js/bootstrap.min.js"></script>
 <script src="/plugin/bootstrap-select-1.13.9/dist/js/bootstrap-select.min.js"></script>
 <script>
     $(".selectpicker").selectpicker({width: '80%'});
