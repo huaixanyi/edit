@@ -48,6 +48,9 @@ public class EditController {
         if (name == null || name.length() <= 0) {
             return new FileContent(this.fileDicSelect(), this.fileSelect());
         }
+        if (EditContext.pathList.contains(name)){
+            return new FileContent(this.fileDicSelect(), this.fileSelect());
+        }
         File file = new File(name);
         if (!file.exists()) {
             throw new FileNotFoundException(name);
@@ -104,6 +107,7 @@ public class EditController {
             throw new FileNotFoundException(EditContext.BLOG_PARENT_PATH);
         }
         listLF(file, fileSelectList);
+        EditContext.systemFile(fileSelectList);
         return fileSelectList;
     }
 
