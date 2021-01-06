@@ -96,12 +96,17 @@
                 <button id="edit-newfile-submit" onclick="newFile(this,false)" type="button" class="btn btn-primary"
                         style="width: 10%;float: right;">提交
                 </button>
+                <button id="edit-newfile-delete-submit" onclick="deleteFile(this,true)" type="button" class="btn btn-primary"
+                        style="width: 10%;float: right;">删除
+                </button>
             </div>
             <div style="width: 100%;">
                 <select id="pathSelect" class="selectpicker" data-live-search="true">
                     <option value=''>请选择</option>
                 </select>
                 <button id="edit-submit" type="button" class="btn btn-primary" style="width: 10%;float: right;">提交
+                </button>
+                <button id="edit-delete-submit" type="button" onclick="deleteFile(this,false)" class="btn btn-primary" style="width: 10%;float: right;">删除
                 </button>
             </div>
             <div style="width: 100%;">
@@ -231,6 +236,70 @@
             });
         }
 
+    }
+
+    function deleteFile(ele, isDic){
+        if (isDic) {
+            let val = $("#dicSelect").val();
+            if (!val) {
+                alert("请选择文件路径")
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/edit/delete",
+                data: {isDic: isDic, name: val},
+                dataType: "json",
+                success: function (data) {
+                    alert("ok")
+                    $("#pathSelect").html("<option value=''>请选择</option>")
+                    $("#dicSelect").html("<option value=''>请选择</option>")
+                    if (data.fileList) {
+                        $.each(data.fileList, function (i, o) {
+                            $("#pathSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
+                        });
+                    }
+                    $("#pathSelect").selectpicker('refresh');
+
+                    if (data.pathList) {
+                        $.each(data.pathList, function (i, o) {
+                            $("#dicSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
+                        });
+                    }
+                    $("#dicSelect").selectpicker('refresh');
+                }
+            });
+        } else {
+            let val = $("#pathSelect").val();
+            if (!val) {
+                alert("请选择文件路径")
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/edit/delete",
+                data: {isDic: isDic, name: val},
+                dataType: "json",
+                success: function (data) {
+                    alert("ok")
+                    $("#pathSelect").html("<option value=''>请选择</option>")
+                    $("#dicSelect").html("<option value=''>请选择</option>")
+                    if (data.fileList) {
+                        $.each(data.fileList, function (i, o) {
+                            $("#pathSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
+                        });
+                    }
+                    $("#pathSelect").selectpicker('refresh');
+
+                    if (data.pathList) {
+                        $.each(data.pathList, function (i, o) {
+                            $("#dicSelect").append("<option value='" + o.path + "'>" + o.path + "</option>");
+                        });
+                    }
+                    $("#dicSelect").selectpicker('refresh');
+                }
+            });
+        }
     }
 
     function fileSelect() {

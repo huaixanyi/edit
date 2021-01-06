@@ -7,6 +7,8 @@ import com.huaxianyi.edit.util.EditContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author yancheng
@@ -38,6 +41,35 @@ public class EditController {
         return new ModelAndView("view");
     }
 
+    @ResponseBody
+    @PostMapping("/delete")
+    public FileContent delete(String name, Boolean isDic) throws Exception {
+
+        if (name == null || name.length() <= 0) {
+            return new FileContent(this.fileDicSelect(), this.fileSelect());
+        }
+        File file = new File(name);
+        if (!file.exists()) {
+            throw new FileNotFoundException(name);
+        }
+        if (file.isDirectory()){
+            /*删除文件夹中文件*/
+            deleteFileTree(file);
+        }
+        boolean delete = file.delete();
+        return new FileContent(this.fileDicSelect(), this.fileSelect());
+    }
+
+    private void deleteFileTree(File file){
+        for (File f : Objects.requireNonNull(file.listFiles())) {
+            if (f.isDirectory()){
+                deleteFileTree(f);
+            }else {
+                boolean delete = f.delete();
+            }
+        }
+    }
+    
     @ResponseBody
     @PostMapping("/fileSelect")
     public List<FileSelect> fileSelect() throws Exception {
@@ -137,6 +169,6 @@ public class EditController {
             }
             Files.write(EditContext.staticInitFile.getBytes(), file2);
         }
-        return new FileContent(this.fileDicSelect(),this.fileSelect());
+        return new FileContent(this.fileDicSelect(), this.fileSelect());
     }
 }
